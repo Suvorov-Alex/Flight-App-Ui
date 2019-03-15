@@ -1,63 +1,45 @@
+import 'package:flight_app_ui/WaveShapeCilpper.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialApp(
+      title: 'Flight App',
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    ));
 
-class MyApp extends StatelessWidget {
+Color startColor = Color(0xFF81D4FA);
+Color endColor = Color(0xFF7FC4F7);
+
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      body: Column(
+        children: <Widget>[HomeScreenTopPart()],
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class HomeScreenTopPart extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeScreenTopPartState createState() => _HomeScreenTopPartState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _HomeScreenTopPartState extends State<HomeScreenTopPart> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return Stack(
+      children: <Widget>[
+        ClipPath(
+          clipper: WaveShapeClipper(),
+          child: Container(
+            height: 400.0,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [startColor, endColor])),
+          ),
+        )
+      ],
     );
   }
 }
