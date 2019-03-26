@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[HomeScreenTopPart()],
+        children: <Widget>[HomeScreenTopPart(), homeScreenBottomPart],
       ),
     );
   }
@@ -226,6 +226,134 @@ class _ChoiceChipState extends State<ChoiceChip> {
             style: TextStyle(color: Colors.white, fontSize: 14.0),
           )
         ],
+      ),
+    );
+  }
+}
+
+var viewAllStyle = TextStyle(fontSize: 14.0, color: appTheme.primaryColor);
+
+var homeScreenBottomPart = Column(
+  children: <Widget>[
+    Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Text("Currently Watched Items", style: dropDownMenuItemStyle),
+          Spacer(),
+          Text("VIEW ALL(21)", style: viewAllStyle),
+        ],
+      ),
+    ),
+    Container(
+      height: 210.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: cityCards,
+      ),
+    )
+  ],
+);
+
+List<CityCard> cityCards = [
+  CityCard("assets/images/eifel.jpg", "Paris", "Jun 15", "50", "8319", "4159"),
+  CityCard(
+      "assets/images/prague.jpg", "Prague", "Aug 10", "45", "4299", "2250"),
+  CityCard("assets/images/singapore.jpg", "Singapore", "Mar 21", "50", "9999", "4999"),
+  CityCard("assets/images/ny.jpg", "New York City", "Sep 7", "50", "9000", "4500"),
+  CityCard("assets/images/moscow.jpg", "Moscow", "May 9", "50", "499", "249"),
+];
+
+class CityCard extends StatelessWidget {
+  final String image;
+  final String cityName;
+  final String tourDate;
+  final String discount;
+  final String price;
+  final String priceWithDiscount;
+
+  CityCard(this.image, this.cityName, this.tourDate, this.discount, this.price,
+      this.priceWithDiscount);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        child: Stack(
+          children: <Widget>[
+            Container(
+                height: 210.0,
+                width: 160.0,
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(image), fit: BoxFit.cover)))),
+            Positioned(
+              left: 0.0,
+              bottom: 0.0,
+              width: 160.0,
+              height: 60.0,
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                      Colors.black,
+                      Colors.black.withOpacity(0.06)
+                    ])),
+              ),
+            ),
+            Positioned(
+              left: 10.0,
+              bottom: 10.0,
+              right: 10.0,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        cityName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 18.0),
+                      ),
+                      Text(
+                        tourDate,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 14.0),
+                      ),
+                    ],
+                  ),
+                  Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: Text(
+                        "$discount%",
+                        style: TextStyle(fontSize: 14.0, color: Colors.black),
+                      )),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
